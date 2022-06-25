@@ -4,24 +4,24 @@ import java.io.Serializable;
 
 public class Account implements Serializable{
 	private int id;
-	private double currBalance;
+	private double Balance;
 	private int accOwner;
 	private boolean active;
 	
 	public Account() {
 	}
 
-	public Account(int id, double currBalance, int accOwner, boolean active) {
+	public Account(int id, double Balance, int accOwner, boolean active) {
 		super();
 		this.id = id;
-		this.currBalance = currBalance;
+		this.Balance = Balance;
 		this.accOwner = accOwner;
 		this.active = active;
 	}
 
-	public Account(double currBalance, int accOwner, boolean active) {
+	public Account(double Balance, int accOwner, boolean active) {
 		super();
-		this.currBalance = currBalance;
+		this.Balance = Balance;
 		this.accOwner = accOwner;
 		this.active = active;
 	}
@@ -34,12 +34,12 @@ public class Account implements Serializable{
 		this.id = id;
 	}
 
-	public double getCurrBalance() {
-		return currBalance;
+	public double getBalance() {
+		return Balance;
 	}
 
-	public void setCurrBalance(double currBalance) {
-		this.currBalance = currBalance;
+	public void setBalance(double Balance) {
+		this.Balance = Balance;
 	}
 
 	public int getAccOwner() {
@@ -65,7 +65,7 @@ public class Account implements Serializable{
 		result = prime * result + accOwner;
 		result = prime * result + (active ? 1231 : 1237);
 		long temp;
-		temp = Double.doubleToLongBits(currBalance);
+		temp = Double.doubleToLongBits(Balance);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + id;
 		return result;
@@ -84,7 +84,7 @@ public class Account implements Serializable{
 			return false;
 		if (active != other.active)
 			return false;
-		if (Double.doubleToLongBits(currBalance) != Double.doubleToLongBits(other.currBalance))
+		if (Double.doubleToLongBits(Balance) != Double.doubleToLongBits(other.Balance))
 			return false;
 		if (id != other.id)
 			return false;
@@ -93,13 +93,9 @@ public class Account implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", currBalance=" + currBalance + ", accOwner=" + accOwner + ", active=" + active
+		return "Account [id=" + id + ", Balance=" + Balance + ", accOwner=" + accOwner + ", active=" + active
 				+ "]";
 	}
-	
-	
-	
-	
 	
 	
 }
