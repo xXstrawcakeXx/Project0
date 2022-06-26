@@ -13,13 +13,17 @@ public class MainRun {
 
 	static Scanner scan = new Scanner(System.in);
 
+//*************************************************************************
+	
 	public static void main(String[] args) {
 
 		AccountService as = new AccountService();
-		as.viewAccountsByOwner(2);
-
+		as.deleteAccount(3);
 		//run();
 	}
+
+//************************************************************************
+	
 
 	public static void run() {
 			System.out.println("Welcome to our Bank!");

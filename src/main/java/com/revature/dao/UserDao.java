@@ -105,12 +105,8 @@ public class UserDao implements IUserDao {
 				String usern = rs.getString("username");
 				String pwd = rs.getString("pwd");
 				Role uRole = (Role) rs.getObject("user_role");
-				
 				User u = new User (id, usern, pwd, uRole, u.getAccounts() );
 			}
-			
-			
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
