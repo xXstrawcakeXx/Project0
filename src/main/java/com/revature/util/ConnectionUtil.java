@@ -32,6 +32,7 @@ public class ConnectionUtil {
 		
 		try {
 			conn = DriverManager.getConnection(url, username, password);
+			conn.setSchema("project0-testschema");
 			System.out.println("Established Connection to Database!");
 		} catch (SQLException e) {
 			System.out.println("Cannot establish connection");

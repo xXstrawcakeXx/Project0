@@ -10,7 +10,7 @@ public interface IAccountDao {
 	
 	List<Account> findAll();
 	
-	Account findById(int id); //returns account based off Id
+	List<Account> findById(int id); //returns account based off Id
 	
 	List<Account> findByOwner(int accOwnerId);
 	

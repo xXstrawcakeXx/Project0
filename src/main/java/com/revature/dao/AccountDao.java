@@ -51,25 +51,27 @@ public class AccountDao implements IAccountDao {
 //*****************************************************************************************		
 	//FINISHED BUT NEEDS TESTING
 	//WHAT DO I RETURNNNNN????
-	public Account findById(int id) {
-		Connection conn = ConnectionUtil.getConnection();
-		String sql = "SELECT * FROM accounts WHEN id = ?";
+	public List<Account> findById(int id) {
+		List<Account> accList = new LinkedList<Account>();
+		
 		try {
+			Connection conn = ConnectionUtil.getConnection();
+			String sql = "SELECT * FROM accounts WHERE id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				if (rs.getInt(1) == id) {
-					double bal = rs.getDouble(2);
-					int accOw = rs.getInt(3);
-					Boolean actv = rs.getBoolean(4);
-					
-					Account b = new Account(id, bal, accOw, actv);
-					System.out.println("This is the account associated with id number " + id + ": Balance \n" 
-					+ bal + ", Account Owner " + accOw + ", Account Status " + actv);
-					return b;
-				}
+				int ids = rs.getInt("id");
+				double balance = rs.getDouble("balance");
+				int accOwnerId = rs.getInt("acc_owner");
+				boolean isActive = rs.getBoolean("active");
+				
+				Account b = new Account(id, balance, accOwnerId, isActive);
+					System.out.println("This is the account associated with id number " + ids + 
+							": Balance \n" + balance + ", Account Owner " + accOwnerId + ", Account Status " + isActive);
+					accList.add(b);
+					return accList;
 			}
 		} catch (SQLException e) {
 			System.out.println("Unable to find account");
@@ -80,45 +82,81 @@ public class AccountDao implements IAccountDao {
 
 //*****************************************************************************************	
 
-	
-	
 	public List<Account> findByOwner(int accOwnerId) {
-		Connection conn = ConnectionUtil.getConnection();
-		String sql = "SELECT * FROM accounts WHEN acc_owner = ?";
+		List<Account> accList = new LinkedList<Account>();
+		
 		try {
+			Connection conn = ConnectionUtil.getConnection();
+			String sql = "SELECT * FROM accounts WHERE acc_owner = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, accOwnerId);
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				if (rs.getInt(3) == accOwnerId) {
-					double bal = rs.getDouble(2);
-					int accOw = rs.getInt(3);
-					Boolean actv = rs.getBoolean(4);
-					
-					Account b = new Account(id, bal, accOw, actv);
-					System.out.println("This is the account associated with id number " + id + ": Balance \n" 
-					+ bal + ", Account Owner " + accOw + ", Account Status " + actv);
-					return b;
+				int id = rs.getInt("id");
+				double bal = rs.getDouble("balance");
+				int accOw = rs.getInt("acc_owner");
+				Boolean actv = rs.getBoolean("active");
+				Account b = new Account(id, bal, accOw, actv);
+				for(b: accList) {
+				System.out.println("This is the account associated with id number " + accOw + ": Balance \n" 
+						+ bal + ", Account Owner " + accOw + ", Account Status " + actv);
+				accList.add(b);
+				return accList;
 				}
 			}
-		} catch (SQLException e) {
+		}catch (SQLException e) {
 			System.out.println("Unable to find account");
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		return null;
 	}
 
 //*****************************************************************************************	
 	public boolean update(Account a) {
-		// TODO Auto-generated method stub
+		
+		try {
+			Connection conn = ConnectionUtil.getConnection();
+			String sql = "UPDATE accounts SET balance = ?, acc_owner = ?, active = ? WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, a.getBalance());
+			stmt.setInt(2, a.getAccOwner());
+			stmt.setBoolean(3, a.isActive());
+			stmt.setInt(4, a.getId());
+			
+			ResultSet rs;
+			if((rs = stmt.executeQuery()) != null) {
+				rs.next();
+				System.out.println("Account successfully updated");
+			return true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to update account - sql exception");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;
+		
 	}
 
 //*****************************************************************************************	
+	
 	public boolean delete(Account a) {
-		// TODO Auto-generated method stub
+		try {
+			Connection conn = ConnectionUtil.getConnection();
+			String sql = "DELETE FROM accounts WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, a.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			int id = rs.getInt(1);
+			System.out.println("Account with id " + id + " has been successfully deleted");
+			return true;
+		}catch (SQLException e) {
+			System.out.println("Unable to delete account - sql exception");
+			e.printStackTrace();
+		}
 		return false;
 	}
-
 }
