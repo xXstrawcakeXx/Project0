@@ -1,6 +1,7 @@
 package com.revature.dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -122,20 +123,6 @@ public class AccountDao implements IAccountDao {
 			stmt.setBoolean(3, a.isActive());
 			stmt.setInt(4, a.getId());
 			
-//			ResultSet rs;
-//			if(((rs = stmt.executeQuery()) != null)) {
-//				rs.next();
-//				int idz = rs.getInt("id");
-//				double newBal = rs.getDouble("balance");
-//				int newAccOwner = rs.getInt("acc_owner");
-//				boolean newActivity = rs.getBoolean("active");
-//				
-//				System.out.println("The account with id# " + idz + " has been successfully updated.");
-//				System.out.println("The new balance is: " + newBal);
-//				System.out.println("The new account owner is: " + newAccOwner);
-//				System.out.println("The new status of the account is " + newActivity);
-//				return true;
-//			}
 			int rowsAff;
 			if(((rowsAff = stmt.executeUpdate()) ==1)) {
 				System.out.println("The account with id# " + a.getId() + " has been successfully updated.");

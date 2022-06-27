@@ -1,8 +1,6 @@
 package com.revature;
 
 import static org.junit.Assert.assertEquals;
-import org.junit.Ignore;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -14,22 +12,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.revature.dao.UserDao;
+import com.revature.exceptions.RegisterUserFailedException;
 import com.revature.models.Account;
+import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.service.UserService;
 
+
 public class UserServiceTest {
-	private UserService us;
-	private Userdao mockDao;
 	
+	private UserService us;
+	private UserDao mockDao;
 	private User dummyUser;
+	
+//********************************************************************************
 	
 	@Before
 	public void setup() {
 		us = new UserService();
 		
 		mockDao = mock(UserDao.class);
-		
 		us.udao = mockDao;
 		
 		dummyUser = new User();
@@ -42,12 +44,11 @@ public class UserServiceTest {
 		us = null;
 		dummyUser = null;
 		mockDao = null;
-		
 	}
 	
 	@Test
 	public void testRegisterUserReturnsNewPKId() {
-		dummyUser = new User(0, "Dude", "pass" Role.Admin, new LinkedList<Account>());
+		dummyUser = new User(0, "Dude", "pass", Role.Admin, new LinkedList<Account>());
 		
 		Random r = new Random();
 		int fakePK = r.nextInt(100);
@@ -67,10 +68,10 @@ public class UserServiceTest {
 		us.register(dummyUser);
 	}
 	
-	@Test(expected = RegisteredUserFailedException.class)
+	@Test(expected = RegisterUserFailedException.class)
 	public void testInsertedUserReturnedNegativeOne() {
 		
-		dummyUser = new User(0, "Dude", "pass" Role.Admin, new LinkedList<Account>());
+		dummyUser = new User(0, "Dude", "pass", Role.Admin, new LinkedList<Account>());
 		
 		int fakePK = -1;
 		
@@ -90,7 +91,8 @@ public class UserServiceTest {
 		
 		when(mockDao.findByUsername(username)).thenReturn(dummyUser);
 		
-		User loggedIn = us.login(username), pword));
+		User loggedIn = us.login(username, pword);
+		assertEquals(loggedIn.getUsername(), username);
 	}
 	
 	

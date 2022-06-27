@@ -1,8 +1,10 @@
 package com.revature.models;
 
-public enum Role {
+import java.sql.SQLData;
+
+public enum Role{
 	Admin,
 	Employee,
-	Customer
+	Customer;
 	
 }

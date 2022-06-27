@@ -1,5 +1,12 @@
 D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\MainRun.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\exceptions\RegisterUserFailedException.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\dao\AccountDao.java
 D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\models\Account.java
 D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\models\User.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\dao\IUserDao.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\dao\UserDao.java
 D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\models\Role.java
 D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\util\ConnectionUtil.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\dao\IAccountDao.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\service\AccountService.java
+D:\Work\Java Code\Spring Tool\Project0\src\main\java\com\revature\service\UserService.java

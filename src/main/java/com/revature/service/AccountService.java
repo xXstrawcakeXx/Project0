@@ -64,7 +64,7 @@ public class AccountService {
 		boolean actOrNot = scan.nextBoolean();
 		a.setActive(actOrNot);
 		
-		boolean updat = adao.update(a);
+		boolean updateAccount = adao.update(a);
 		
 		System.out.println("The new balance is: " + a.getBalance());
 		System.out.println("The new account owner is: " + a.getAccOwner());
