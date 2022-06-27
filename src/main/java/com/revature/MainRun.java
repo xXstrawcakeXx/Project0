@@ -41,17 +41,23 @@ public class MainRun {
 			us.register(u);
 			}
 		else if(input == 2) { //STOPPED HERE
+			UserService usLogin = new UserService();
 			do {
-				System.out.print("Please enter your username: ");
+				System.out.print("Please enter your username ");
 				String loginUsername = scan.next();
-				System.out.println("Please enter your password: ");
-				String loginPass = scan.nextLine();
 			
-				UserService usLogin = new UserService();
+				System.out.println("Please enter your password ");
+				String loginPass = scan.next();
+				
 				usLogin.login(loginUsername, loginPass);
-				} while (usLogin == null);	
+				if(usLogin != null) {
 					
-		}
+					break;
+				}
+			}while(true);
+				
+			}	
+					
 		
 						
 

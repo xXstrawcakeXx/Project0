@@ -156,4 +156,75 @@ public class AccountDao implements IAccountDao {
 		}
 		return false;
 	}
+	
+//*****************************************************************************************	
+	public boolean updateAccountFunds(int id, int money) {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			Account a = new Account();
+			a.setId(id);
+			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, a.getBalance() + money);
+			stmt.setInt(2, a.getId());
+			
+			int rowsAff;
+			if(((rowsAff = stmt.executeUpdate()) ==1)) {
+				
+				System.out.println("The account with id# " + a.getId() + " has been updated.");
+				System.out.println("The new balance is: " + (a.getBalance() + money) );
+				return true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to update account balance - sql exception");
+			e.printStackTrace();
+		}
+		return false;
+		}
+
+	
+//*****************************************************************************************	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

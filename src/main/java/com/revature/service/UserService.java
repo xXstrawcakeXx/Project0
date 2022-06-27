@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import com.revature.dao.IUserDao;
 import com.revature.dao.UserDao;
+import com.revature.exceptions.LoginUserFailedException;
 import com.revature.exceptions.RegisterUserFailedException;
 import com.revature.models.User;
 
@@ -115,7 +116,9 @@ public class UserService {
 			System.out.println("Successfully Logged in!");
 			return returnedUser;
 		}
-		return null;
+		else {
+			throw new LoginUserFailedException("Wrong username or passowrd. TRY AGAIN.");
+		}
 	}
 	
 //***************************************************************************************************

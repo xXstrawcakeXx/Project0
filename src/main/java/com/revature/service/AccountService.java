@@ -83,9 +83,17 @@ public class AccountService {
 		a.setId(id);
 		
 		boolean delete = adao.delete(a);
-		
+	}
+
+//*******************************************************************	
+	
+	public void withdrawAccountFunds(int money) {
 		
 	}
+
+	
+	
+	
 	
 	
 }

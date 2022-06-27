@@ -112,7 +112,6 @@ public class UserDao implements IUserDao {
 				
 				Role role = Role.valueOf(rs.getString("user_role"));
 				
-				//Object role = rs.getObject(4);
 				int accId = rs.getInt(5);
 				double bal = rs.getDouble("balance");
 				Boolean activ = rs.getBoolean("active");
@@ -121,7 +120,7 @@ public class UserDao implements IUserDao {
 				accList.add(a);
 				
 				User u = new User(userId, usernamez, password, role, accList);
-				System.out.println("User found!");
+				System.out.println("Fetching user...");
 				
 				return u;
 			}	
@@ -205,34 +204,6 @@ public class UserDao implements IUserDao {
 		return false;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
