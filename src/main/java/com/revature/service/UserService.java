@@ -1,5 +1,6 @@
 package com.revature.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,6 +8,7 @@ import com.revature.dao.IUserDao;
 import com.revature.dao.UserDao;
 import com.revature.exceptions.LoginUserFailedException;
 import com.revature.exceptions.RegisterUserFailedException;
+import com.revature.models.Account;
 import com.revature.models.User;
 
 public class UserService {
@@ -14,6 +16,8 @@ public class UserService {
 	//Dependency Injection
 	public IUserDao udao = new UserDao();
 	private static Scanner scan = new Scanner(System.in);
+	
+//***************************************************************************************************
 	
 	public User register(User u) {
 		System.out.println("Registering user...");
@@ -49,6 +53,9 @@ public class UserService {
 		System.out.println("Password: " + u.getPassword());
 		System.out.println("Role: " + u.getRole());
 		System.out.println("Accounts: " + u.getAccounts());
+		for(Account a: u.getAccounts()) {
+			System.out.println(a);
+		}
 		
 	}
 
@@ -61,7 +68,8 @@ public class UserService {
 		System.out.println("Id: " + u.getId());
 		System.out.println("Password: " + u.getPassword());
 		System.out.println("Role: " + u.getRole());
-		System.out.println("Accounts: " + u.getAccounts());
+		
+		
 	}
 	
 	

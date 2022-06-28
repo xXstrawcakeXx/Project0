@@ -1,11 +1,11 @@
 package com.revature.dao;
 
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,13 +15,35 @@ import com.revature.util.ConnectionUtil;
 //*****************************************************************************************	
 
 public class AccountDao implements IAccountDao {
+	
+	private String sql;
 
 //*****************************************************************************************	
 	public int insert(Account a) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		try(Connection conn = ConnectionUtil.getConnection()){
+			sql = "INSERT INTO accounts (balance, acc_owner, active) values (?, ?, ?) RETURNING accounts.id";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, a.getBalance());
+			stmt.setInt(2, a.getAccOwner());
+			stmt.setObject(3, true);
+			
+			ResultSet rs;
+			if ((rs = stmt.executeQuery()) != null) {
+				rs.next();
+				int id = rs.getInt(1);
+				System.out.println("We returned an account with id #" + id);
+				return id;
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to insert account - sql exception");
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
+//*****************************************************************************************		
+	
 	public List<Account> findAll() {
 		List<Account> accList = new LinkedList<Account>();
 
@@ -72,13 +94,13 @@ public class AccountDao implements IAccountDao {
 					System.out.println("This is the account associated with id number " + ids + 
 							": Balance \n" + balance + ", Account Owner " + accOwnerId + ", Account Status " + isActive);
 					accList.add(b);
-					return accList;
+					
 			}
 		} catch (SQLException e) {
 			System.out.println("Unable to find account");
 		e.printStackTrace();
 		}
-		return null;
+		return accList;
 	}
 
 //*****************************************************************************************	
@@ -100,13 +122,14 @@ public class AccountDao implements IAccountDao {
 				Boolean actv = rs.getBoolean("active");
 				Account b = new Account(id, bal, accOw, actv);
 				accList.add(b);
-				return accList;
+				System.out.println("This is the account associated with id number " + id + 
+						": Balance \n" + bal + ", Account Owner " + accOw + ", Account Status " + actv);
 				}
 		}catch (SQLException e) {
 			System.out.println("Unable to find account/s");
 			e.printStackTrace();
 		}
-		return null;
+		return accList;
 	}
 
 //*****************************************************************************************	
@@ -182,7 +205,6 @@ public class AccountDao implements IAccountDao {
 		return false;
 		}
 
-	
 //*****************************************************************************************	
 	
 	

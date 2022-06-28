@@ -26,6 +26,8 @@ public class Account implements Serializable{
 		this.active = active;
 	}
 
+//*****************************************************************************************	
+	
 	public int getId() {
 		return id;
 	}
@@ -57,7 +59,8 @@ public class Account implements Serializable{
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
+//*****************************************************************************************	
 
 	@Override
 	public int hashCode() {

@@ -5,18 +5,35 @@ import java.util.Scanner;
 
 import com.revature.dao.AccountDao;
 import com.revature.dao.IAccountDao;
+import com.revature.exceptions.RegisterAccountFailedException;
 import com.revature.models.Account;
 
 public class AccountService {
 	
-	private static IAccountDao adao = new AccountDao();
+	public IAccountDao adao = new AccountDao();
 	private static Scanner scan = new Scanner(System.in);
+	
+//*******************************************************************
+	
+	public Account register(Account a) {
+		System.out.println("Registering account");
+		if(a.getId() != 0) {
+			throw new RegisterAccountFailedException("Account not valid to register because Id was not 0");
+		}
+		int generatedId = adao.insert(a);
+		if(generatedId != -1 && generatedId != a.getId()) {
+			a.setId(generatedId);
+		}else {
+			throw new RegisterAccountFailedException("User's Id was either -1 or did not change after insertion");
+		}
+		System.out.println("Successfully registered account with Id of " + a.getId());
+		return a;
+	}
 	
 //*******************************************************************
 	
 	public void viewAllAccounts() {
 		System.out.println("Fetching accounts...");
-		//Calls on Dao to get all our accounts
 		List<Account> accList = adao.findAll();
 		
 		for (Account a: accList) {
@@ -27,18 +44,19 @@ public class AccountService {
 //*******************************************************************	
 	
 	public void viewAccountsById(int id) {
-		System.out.println("Please enter an id");
+		System.out.println("Fetching account...");
 		List<Account> accList = adao.findById(id);
 		
 		for(Account a: accList) {
 			System.out.println(a);
 	}
+		
 }
 
 //*******************************************************************	
 	
 	public void viewAccountsByOwner(int acc_owner) {
-		System.out.println("Please enter the account owner's number");
+		System.out.println("Fetching accounts...");
 		List<Account> accList = adao.findByOwner(acc_owner);
 		
 		for(Account a: accList) {

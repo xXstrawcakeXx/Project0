@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.After;
@@ -37,14 +38,18 @@ public class UserServiceTest {
 		dummyUser = new User();
 		dummyUser.setAccounts(new LinkedList<Account>());
 		dummyUser.setId(0);
-		
 	}
+	
+//***************************************************************************************	
+	
 	@After
 	public void teardown() {
 		us = null;
 		dummyUser = null;
 		mockDao = null;
 	}
+	
+//***************************************************************************************
 	
 	@Test
 	public void testRegisterUserReturnsNewPKId() {
@@ -60,6 +65,8 @@ public class UserServiceTest {
 		assertEquals(registeredUser.getId(), fakePK);
 	}
 	
+//***************************************************************************************
+	
 	//with pass test if it throws an exception
 	@Test(expected = RegisterUserFailedException.class)
 	public void testRegisterUserWithNonZeroId() {
@@ -67,6 +74,8 @@ public class UserServiceTest {
 		
 		us.register(dummyUser);
 	}
+	
+//***************************************************************************************
 	
 	@Test(expected = RegisterUserFailedException.class)
 	public void testInsertedUserReturnedNegativeOne() {
@@ -82,6 +91,8 @@ public class UserServiceTest {
 		assertEquals(registeredUser.getId(), fakePK);
 	}
 	
+//***************************************************************************************
+	
 	@Test
 	public void testLoginReturnsUser() {
 		dummyUser = new User(0, "PewPew", "pass", Role.Admin, new LinkedList<Account>());
@@ -94,6 +105,28 @@ public class UserServiceTest {
 		User loggedIn = us.login(username, pword);
 		assertEquals(loggedIn.getUsername(), username);
 	}
+	
+//***************************************************************************************
+
+	
+	@Test
+	public void testFindUserById() {
+		
+//		String id = "";
+//		
+//		dummyUser = new User(0, username, "pass", Role.Admin, new LinkedList<Account>());
+//		
+//		
+//		when(mockDao.findById(
+//				
+		
+		
+		
+		
+		
+		
+	}
+	
 	
 	
 }

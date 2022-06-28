@@ -7,7 +7,7 @@ import com.revature.models.User;
 import com.revature.service.AccountService;
 import com.revature.service.UserService;
 
-public class MainRun {
+public class SecondRun {
 
 	static Scanner scan = new Scanner(System.in);
 
@@ -17,8 +17,7 @@ public class MainRun {
 
 		AccountService as = new AccountService();
 		UserService us = new UserService();
-		as.viewAccountsByOwner(2);
-		//menuRun();
+		menuRun();
 	}
 
 //************************************************************************

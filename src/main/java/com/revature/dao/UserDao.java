@@ -24,14 +24,9 @@ public class UserDao implements IUserDao {
 //*****************************************************************************************
 	
 	public int insert(User u) {
-		// Step 1 - Capture DB connection using the connection util
-		conn = ConnectionUtil.getConnection();
 		
-		// Step 2 - Generate a sql statement like "INSERT INTO..."
-		sql = "INSERT INTO users (username, pwd, user_role) values (?, ?, ?) RETURNING users.id";
-
-		// Step 2b - Use a Prepared statement to avoid SQL injection
-		try {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			sql = "INSERT INTO users (username, pwd, user_role) values (?, ?, ?) RETURNING users.id";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, u.getUsername());
 			stmt.setString(2, u.getPassword());
@@ -60,31 +55,36 @@ public class UserDao implements IUserDao {
 		try {
 			List<Account> accList = new LinkedList<Account>();
 			conn = ConnectionUtil.getConnection();
-			sql = "SELECT users.*, accounts.id, accounts.balance, accounts.active FROM users LEFT JOIN accounts ON users.id = accounts.acc_owner WHERE users.id = ?;";
+			sql = "SELECT * FROM users LEFT JOIN accounts ON users.id = accounts.acc_owner WHERE users.id = ?;";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
+				
 				int userId = rs.getInt(1);
 				String username = rs.getString("username");
 				String password = rs.getString("pwd");
-				
 				Role role = Role.valueOf(rs.getString("user_role"));
-				
-				//Object role = rs.getObject(4);
 				int accId = rs.getInt(5);
 				double bal = rs.getDouble("balance");
-				Boolean activ = rs.getBoolean("active");
+				int acc_own = rs.getInt("acc_owner");
+				boolean activityStatus = rs.getBoolean("active");
 				
-				Account a = new Account(accId, bal, userId, activ); 
+				Account a = new Account(accId, bal, acc_own, activityStatus);
 				accList.add(a);
+				System.out.println(accId);
 				
-				User u = new User(userId, username, password, role, accList);
+				User u = new User(userId, username, password, role);
+				u.setAccounts(accList);
 				System.out.println("User found!");
 				
 				return u;
-			}	
+				
+				
+			}
+			
+			
 		} catch (SQLException e) {
 			System.out.println("Unable to find user by Id - sql exception");
 			e.printStackTrace();

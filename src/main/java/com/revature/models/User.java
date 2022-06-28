@@ -25,12 +25,18 @@ public class User implements Serializable{
 		this.accounts = accounts;
 	}
 
-	public User(String username, String password, Role role, List<Account> accounts) {
+	public User(int userId, String password, String password2, Role role2) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.role = role;
-		this.accounts = accounts;
+		//this.accounts = accounts;
+	}
+	
+	public User(String username, String password, Role role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
 	}
 
 	@Override
