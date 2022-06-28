@@ -181,6 +181,7 @@ public class AccountDao implements IAccountDao {
 	}
 	
 //*****************************************************************************************	
+	
 	public boolean updateAccountFunds(int id, int money) {
 		try (Connection conn = ConnectionUtil.getConnection()){
 			Account a = new Account();
@@ -207,9 +208,55 @@ public class AccountDao implements IAccountDao {
 
 //*****************************************************************************************	
 	
+	public boolean depositFunds(Account a, double deposit) {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, a.getBalance() + deposit);
+			stmt.setInt(2, a.getId());
+			
+			int rowsAff;
+			if(((rowsAff = stmt.executeUpdate()) ==1)) {
+				System.out.println("The account with id# " + a.getId() + " has been updated.");
+				
+				return true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to update account balance - sql exception");
+			e.printStackTrace();
+		}
+		return false;
+		}
+
+//*****************************************************************************************
 	
-	
-	
+	public boolean withdrawAccountFunds(Account a, double withdrawal) {
+		try (Connection conn = ConnectionUtil.getConnection()){
+			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+			
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setDouble(1, a.getBalance() - withdrawal);
+			stmt.setInt(2, a.getId());
+			
+			int rowsAff;
+			if(((rowsAff = stmt.executeUpdate()) ==1)) {
+				System.out.println("The account with id# " + a.getId() + " has been updated.");
+				System.out.println("The new balance is: " + (a.getBalance() - withdrawal) );
+				return true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Unable to update account balance - sql exception");
+			e.printStackTrace();
+		}
+		return false;
+		}
+
+	@Override
+	public boolean withdrawFunds(Account a, double withdrawal) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
 

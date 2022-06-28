@@ -17,4 +17,8 @@ public interface IAccountDao {
 	boolean update(Account a);
 	
 	boolean delete(Account a);
+
+	boolean depositFunds(Account a, double deposit);
+
+	boolean withdrawFunds(Account a, double withdrawal);
 }

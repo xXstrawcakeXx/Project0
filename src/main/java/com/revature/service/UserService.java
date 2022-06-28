@@ -125,7 +125,7 @@ public class UserService {
 			return returnedUser;
 		}
 		else {
-			throw new LoginUserFailedException("Wrong username or passowrd. TRY AGAIN.");
+			throw new LoginUserFailedException("Wrong username or password. TRY AGAIN.");
 		}
 	}
 	

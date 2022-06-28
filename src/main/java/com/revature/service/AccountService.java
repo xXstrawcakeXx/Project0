@@ -99,14 +99,31 @@ public class AccountService {
 	public void deleteAccount(int id) {
 		Account a = new Account();
 		a.setId(id);
-		
 		boolean delete = adao.delete(a);
 	}
 
 //*******************************************************************	
 	
-	public void withdrawAccountFunds(int money) {
+public void depositAccountFunds(int id, double deposit) {
+		Account a = new Account();
+		a.setId(id);
 		
+		boolean isDeposited = adao.depositFunds(a, deposit);
+		
+	}
+	
+	
+	public void withdrawAccountFunds(int id, double withdrawal) {
+		Account a = new Account();
+		a.setId(id);
+		
+		if((a.getBalance() - withdrawal) < 0) {
+			System.out.println("You cannot withdraw more than you have!");
+		}
+		else {
+			boolean isWithdrawn = adao.withdrawFunds(a, withdrawal);
+			System.out.println("The new balance is: " + (a.getBalance() -  withdrawal) );
+		}
 	}
 
 	
