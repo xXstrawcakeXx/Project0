@@ -26,7 +26,7 @@ public class UserDao implements IUserDao {
 	public int insert(User u) {
 		
 		try (Connection conn = ConnectionUtil.getConnection()){
-			sql = "INSERT INTO users (username, pwd, user_role) values (?, ?, ?) RETURNING users.id";
+			sql = "INSERT INTO users (id, username, pwd, user_role) VALUES (SELECT pg_catalog.setval(pg_get_serial_sequence('users', 'id'), MAX(id+1) FROM users) ( ?, ?, ?) RETURNING users.id";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, u.getUsername());
 			stmt.setString(2, u.getPassword());
@@ -52,9 +52,12 @@ public class UserDao implements IUserDao {
 //*****************************************************************************************
 	//UNFINISHED SPAGHETTI CODE - STILL PRINTS 1 ACCOUNT FOR PPL WHO HAVE MULTIPLE
 	public User findById(int id) {	
-		try {
+		
+		User u = new User();
+		
+		try {conn = ConnectionUtil.getConnection();
 			List<Account> accList = new LinkedList<Account>();
-			conn = ConnectionUtil.getConnection();
+			
 			sql = "SELECT * FROM users LEFT JOIN accounts ON users.id = accounts.acc_owner WHERE users.id = ?;";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
@@ -75,13 +78,13 @@ public class UserDao implements IUserDao {
 				accList.add(a);
 				System.out.println(accId);
 				
-				User u = new User(userId, username, password, role);
+				u.setId(userId);
+				u.setUsername(username);
+				u.setPassword(password);
+				u.setRole(role);
 				u.setAccounts(accList);
+				
 				System.out.println("User found!");
-				
-				return u;
-				
-				
 			}
 			
 			
@@ -89,7 +92,7 @@ public class UserDao implements IUserDao {
 			System.out.println("Unable to find user by Id - sql exception");
 			e.printStackTrace();
 		}
-		return null;
+		return u;
 	}
 
 	
@@ -97,6 +100,8 @@ public class UserDao implements IUserDao {
 	//UNFINISHED SPAGHETTI CODE - STILL PRINTS 1 ACCOUNT FOR PPL WHO HAVE MULTIPLE
 	public User findByUsername(String username) {
 		
+		User u = new User();
+		Account a = new Account();
 		try {
 			List<Account> accList = new LinkedList<Account>();
 			conn = ConnectionUtil.getConnection();
@@ -116,19 +121,24 @@ public class UserDao implements IUserDao {
 				double bal = rs.getDouble("balance");
 				Boolean activ = rs.getBoolean("active");
 				
-				Account a = new Account(accId, bal, userId, activ); 
+				a = new Account(accId, bal, userId, activ); 
 				accList.add(a);
 				
-				User u = new User(userId, usernamez, password, role, accList);
+				u.setId(userId);
+				u.setUsername(usernamez);
+				u.setPassword(password);
+				u.setRole(role);
+				u.setAccounts(accList);
+				
 				System.out.println("Fetching user...");
 				
-				return u;
+			
 			}	
 		} catch (SQLException e) {
 			System.out.println("Unable to find user by username - sql exception");
 			e.printStackTrace();
 		}
-		return null;
+		return u;
 	}
 
 	
@@ -183,6 +193,7 @@ public class UserDao implements IUserDao {
 		return false;
 	}
 
+//*****************************************************************************************	
 //*****************************************************************************************	
 	
 	

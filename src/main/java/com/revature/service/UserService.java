@@ -1,6 +1,6 @@
 package com.revature.service;
 
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,9 +53,7 @@ public class UserService {
 		System.out.println("Password: " + u.getPassword());
 		System.out.println("Role: " + u.getRole());
 		System.out.println("Accounts: " + u.getAccounts());
-		for(Account a: u.getAccounts()) {
-			System.out.println(a);
-		}
+		
 		
 	}
 
@@ -69,6 +67,9 @@ public class UserService {
 		System.out.println("Password: " + u.getPassword());
 		System.out.println("Role: " + u.getRole());
 		
+		for(Account a: u.getAccounts()) {
+			System.out.println("Accounts: " + a);
+		}
 		
 	}
 	

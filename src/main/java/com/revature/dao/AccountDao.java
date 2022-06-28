@@ -122,8 +122,7 @@ public class AccountDao implements IAccountDao {
 				Boolean actv = rs.getBoolean("active");
 				Account b = new Account(id, bal, accOw, actv);
 				accList.add(b);
-				System.out.println("This is the account associated with id number " + id + 
-						": Balance \n" + bal + ", Account Owner " + accOw + ", Account Status " + actv);
+				System.out.println("Fetching accounts: ");
 				}
 		}catch (SQLException e) {
 			System.out.println("Unable to find account/s");
@@ -231,7 +230,7 @@ public class AccountDao implements IAccountDao {
 
 //*****************************************************************************************
 	
-	public boolean withdrawAccountFunds(Account a, double withdrawal) {
+	public boolean withdrawFunds(Account a, double withdrawal) {
 		try (Connection conn = ConnectionUtil.getConnection()){
 			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
 			
@@ -252,11 +251,7 @@ public class AccountDao implements IAccountDao {
 		return false;
 		}
 
-	@Override
-	public boolean withdrawFunds(Account a, double withdrawal) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 	
 }
 

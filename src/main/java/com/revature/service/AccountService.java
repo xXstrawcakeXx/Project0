@@ -109,7 +109,8 @@ public void depositAccountFunds(int id, double deposit) {
 		a.setId(id);
 		
 		boolean isDeposited = adao.depositFunds(a, deposit);
-		
+		System.out.println("You have successfully deposited: " + deposit);
+		System.out.println("Your new account balance is: " + a.getBalance());
 	}
 	
 	
@@ -126,8 +127,6 @@ public void depositAccountFunds(int id, double deposit) {
 		}
 	}
 
-	
-	
 	
 	
 	
