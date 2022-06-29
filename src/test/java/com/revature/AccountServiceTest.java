@@ -84,8 +84,10 @@ public class AccountServiceTest {
 		int fakePk = -1;
 		when(mockDao.insert(dummyAccount)).thenReturn(fakePk);
 		
-		Account registeredAccount = null;
-		assertEquals(registeredAccount.getId(), fakePk);
+		AccountService as = new AccountService();
+		
+		Account registeredAccount = as.register(dummyAccount);
+		assertEquals(dummyAccount.getId(), fakePk);
 	}
 		
 //***************************************************************************************		
@@ -130,7 +132,7 @@ public class AccountServiceTest {
 		
 		when(mockDao.depositFunds(dummyAccount, fakeDeposit)).thenReturn(rBool);
 		
-		as.depositAccountFunds(dummyAccount.getId(), fakeDeposit);
+		as.depositAccountFunds(dummyAccount, fakeDeposit);
 		double sum = fakeBal + fakeDeposit;
 		dummyAccount.setBalance(sum);
 		
@@ -139,40 +141,10 @@ public class AccountServiceTest {
 		
 	}
 	
-	
 
-		//List<Account> accList = 
-		
-//		dummyAccount.setId(1);
-//		dummyAccount.setBalance(0);
-//		dummyAccount.setAccOwner(1);
-//		dummyAccount.setActive(false);
-//		
-//		r = new Random();
-//		
-//		
-//		
-//		for(int i = 0; 1<=7; i++) {
-//			int fakeId = r.nextInt(100);
-//			double fakeBal = r.nextDouble(100);
-//			int fakeAccOwn = r.nextInt(100);
-//			
-//			accList
 			
 			
 		
-
-	
-		
-		
-		
-//		for(int i; i<= mockAccList.size(); i++) {
-//			int fakePk = r.nextInt(100);
-//			when(mockAccList.
-//		}
-//		
-//		when(mockDao.findById()).thenReturn
-				
 				
 	
 }

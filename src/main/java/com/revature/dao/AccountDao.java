@@ -122,7 +122,7 @@ public class AccountDao implements IAccountDao {
 				Boolean actv = rs.getBoolean("active");
 				Account b = new Account(id, bal, accOw, actv);
 				accList.add(b);
-				System.out.println("Fetching accounts: ");
+			
 				}
 		}catch (SQLException e) {
 			System.out.println("Unable to find account/s");
@@ -181,29 +181,29 @@ public class AccountDao implements IAccountDao {
 	
 //*****************************************************************************************	
 	
-	public boolean updateAccountFunds(int id, int money) {
-		try (Connection conn = ConnectionUtil.getConnection()){
-			Account a = new Account();
-			a.setId(id);
-			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
-			
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setDouble(1, a.getBalance() + money);
-			stmt.setInt(2, a.getId());
-			
-			int rowsAff;
-			if(((rowsAff = stmt.executeUpdate()) ==1)) {
-				
-				System.out.println("The account with id# " + a.getId() + " has been updated.");
-				System.out.println("The new balance is: " + (a.getBalance() + money) );
-				return true;
-			}
-		} catch (SQLException e) {
-			System.out.println("Unable to update account balance - sql exception");
-			e.printStackTrace();
-		}
-		return false;
-		}
+//	public boolean updateAccountFunds(int id, int money) {
+//		try (Connection conn = ConnectionUtil.getConnection()){
+//			Account a = new Account();
+//			a.setId(id);
+//			String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+//			
+//			PreparedStatement stmt = conn.prepareStatement(sql);
+//			stmt.setDouble(1, a.getBalance() + money);
+//			stmt.setInt(2, a.getId());
+//			
+//			int rowsAff;
+//			if(((rowsAff = stmt.executeUpdate()) ==1)) {
+//				
+//				System.out.println("The account with id# " + a.getId() + " has been updated.");
+//				System.out.println("The new balance is: " + (a.getBalance() + money) );
+//				return true;
+//			}
+//		} catch (SQLException e) {
+//			System.out.println("Unable to update account balance - sql exception");
+//			e.printStackTrace();
+//		}
+//		return false;
+//		}
 
 //*****************************************************************************************	
 	
@@ -218,7 +218,8 @@ public class AccountDao implements IAccountDao {
 			int rowsAff;
 			if(((rowsAff = stmt.executeUpdate()) ==1)) {
 				System.out.println("The account with id# " + a.getId() + " has been updated.");
-				
+				double sum = a.getBalance()+ deposit;
+				a.setBalance(sum);
 				return true;
 			}
 		} catch (SQLException e) {
@@ -237,11 +238,12 @@ public class AccountDao implements IAccountDao {
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setDouble(1, a.getBalance() - withdrawal);
 			stmt.setInt(2, a.getId());
+			double withD = a.getBalance() - withdrawal;
 			
+			a.setBalance(withD);
 			int rowsAff;
 			if(((rowsAff = stmt.executeUpdate()) ==1)) {
 				System.out.println("The account with id# " + a.getId() + " has been updated.");
-				System.out.println("The new balance is: " + (a.getBalance() - withdrawal) );
 				return true;
 			}
 		} catch (SQLException e) {

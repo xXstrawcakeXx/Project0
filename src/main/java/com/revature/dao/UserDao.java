@@ -26,9 +26,10 @@ public class UserDao implements IUserDao {
 	public int insert(User u) {
 		
 		try (Connection conn = ConnectionUtil.getConnection()){
-			sql = "INSERT INTO users (id, username, pwd, user_role) VALUES (SELECT pg_catalog.setval(pg_get_serial_sequence('users', 'id'), MAX(id+1) FROM users) ( ?, ?, ?) RETURNING users.id";
+			sql = "INSERT INTO users (id, username, pwd, user_role) values ((SELECT pg_catalog.setval(pg_get_serial_sequence('users', 'id'), MAX(id+1)) FROM users),?, ?, ?) RETURNING users.id";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, u.getUsername());
+			
+			stmt.setString(1 , u.getUsername());
 			stmt.setString(2, u.getPassword());
 			stmt.setObject(3, u.getRole(), Types.OTHER);
 			System.out.println(u.getUsername() + u.getPassword() + u.getRole() + u.getId());

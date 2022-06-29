@@ -104,26 +104,32 @@ public class AccountService {
 
 //*******************************************************************	
 	
-public void depositAccountFunds(int id, double deposit) {
-		Account a = new Account();
-		a.setId(id);
+//public void depositAccountFunds(int id, double deposit) {
+	public void depositAccountFunds(Account a, double deposit) {
+		//Account a = new Account();
+		//a.setId(id);
+		AccountService as = new AccountService();
+		
 		
 		boolean isDeposited = adao.depositFunds(a, deposit);
-		System.out.println("You have successfully deposited: " + deposit);
-		System.out.println("Your new account balance is: " + a.getBalance());
+		
+		double sum = a.getBalance();
+		System.out.println("You have successfully deposited $" + deposit);
+		System.out.println("Your new account balance is: $" + sum);
 	}
 	
+//*******************************************************************
 	
-	public void withdrawAccountFunds(int id, double withdrawal) {
-		Account a = new Account();
-		a.setId(id);
+	public void withdrawAccountFunds(Account a, double withdrawal) {
+		//Account a = new Account();
+		//a.setId(id);
 		
 		if((a.getBalance() - withdrawal) < 0) {
 			System.out.println("You cannot withdraw more than you have!");
 		}
 		else {
 			boolean isWithdrawn = adao.withdrawFunds(a, withdrawal);
-			System.out.println("The new balance is: " + (a.getBalance() -  withdrawal) );
+			System.out.println("The new balance is: $" + (a.getBalance()) );
 		}
 	}
 
