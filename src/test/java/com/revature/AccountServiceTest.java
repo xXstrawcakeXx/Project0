@@ -1,11 +1,13 @@
 package com.revature;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.Assert; 
+import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.After;
@@ -81,7 +83,8 @@ public class AccountServiceTest {
 		
 		int fakePk = -1;
 		when(mockDao.insert(dummyAccount)).thenReturn(fakePk);
-		Account registeredAccount = as.register(dummyAccount);
+		
+		Account registeredAccount = null;
 		assertEquals(registeredAccount.getId(), fakePk);
 	}
 		
@@ -101,10 +104,41 @@ public class AccountServiceTest {
 			when(mockDao.findAll()).thenReturn(accList);
 			
 		}
+	}
+		
+//***************************************************************************************
+		
+		
+	@Test
+	public void testDepositAccountFunds() {
+	
+		Random r = new Random();
+		int fakerId = r.nextInt(100);
+		double fakeBal = r.nextDouble()*100;
+		int fakeAccOwn = r.nextInt(100);
+		double fakeDeposit = r.nextDouble()*100;
+		boolean rBool = r.nextBoolean();
+		
+		dummyAccount.setId(fakerId);
+		dummyAccount.setBalance(fakeBal);
+		dummyAccount.setAccOwner(fakeAccOwn);
+		dummyAccount.setActive(false);
 		
 		
 		
+		when(mockDao.depositFunds(dummyAccount, fakeDeposit)).thenReturn(rBool);
 		
+		as.depositAccountFunds(dummyAccount.getId(), fakeDeposit);
+		double sum = fakeBal + fakeDeposit;
+		dummyAccount.setBalance(sum);
+		
+		assertEquals(dummyAccount.getBalance(), sum, 1);
+		
+		
+	}
+	
+	
+
 		//List<Account> accList = 
 		
 //		dummyAccount.setId(1);
@@ -125,8 +159,8 @@ public class AccountServiceTest {
 			
 			
 		
-		}
-		
+
+	
 		
 		
 		

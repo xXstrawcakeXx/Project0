@@ -2,6 +2,7 @@ package com.revature;
 
 import java.util.Scanner;
 
+import com.revature.models.Account;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.service.AccountService;
@@ -18,8 +19,11 @@ public class MainRun {
 		AccountService as = new AccountService();
 		UserService us = new UserService();
 		
-		as.depositAccountFunds(7, 20.01);
+		Account a = new Account(5000, 20, true);
 		
+		as.register(a);
+		
+		User u = View
 		
 		//menuRun();
 	}
