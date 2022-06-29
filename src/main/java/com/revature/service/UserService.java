@@ -59,7 +59,7 @@ public class UserService {
 
 //***************************************************************************************************	
 	
-	public void findUserbyUsername(String username) {
+	public void findUserByUsername(String username) {
 		User u = udao.findByUsername(username);
 		
 		System.out.println("The user with sername: " + u.getUsername());
